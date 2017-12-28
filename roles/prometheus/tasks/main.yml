@@ -2,26 +2,26 @@
 
 # FIXME: how to handle customized alert.rules & config file
 - name: get config file stat
-  stat: path={{ deploy_dir }}/conf/prometheus.yml
+  stat: path={{ deploy_dir }}/conf/prometheus@{{ prometheus_port }}.yml
   register: st_conf
 
 - name: get alert conf stat
-  stat: path={{ deploy_dir }}/conf/alert.rules.yml
+  stat: path={{ deploy_dir }}/conf/alert.rules@{{ prometheus_port }}.yml
   register: st_alert_conf
 
 - name: create configuration file if not exist
-  template: src=prometheus.yml.j2 dest={{ deploy_dir }}/conf/prometheus.yml mode=0644
+  template: src=prometheus.yml.j2 dest={{ deploy_dir }}/conf/prometheus@{{ prometheus_port }}.yml mode=0644
   vars:
     hosts: "{{ groups['all'] | list }}"
 
 - name: copy alert rules file if not exist
-  copy: src=alert.rules.yml dest="{{ deploy_dir }}/conf/alert.rules.yml" mode=0644
+  copy: src=alert.rules.yml dest="{{ deploy_dir }}/conf/alert.rules@{{ prometheus_port }}.yml" mode=0644
   when: not st_alert_conf.stat.exists
   register: alert_rules_result
 
 - name: set alert rules label if alert.rules.yml changes
   replace: >
-    dest={{ deploy_dir }}/conf/alert.rules.yml
+    dest={{ deploy_dir }}/conf/alert.rules@{{ prometheus_port }}.yml
     regexp="ENV_LABELS_ENV"
     replace="{{ cluster_name }}"
   when: alert_rules_result.changed

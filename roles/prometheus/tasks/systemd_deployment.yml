@@ -4,6 +4,6 @@
   include_role:
     name: systemd
   vars:
-    this_role_name: prometheus
-    service_name: prometheus
+    this_role_name: prometheus@{{ prometheus_port }}
+    service_name: prometheus@{{ prometheus_port }}
 
