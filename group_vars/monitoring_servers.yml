@@ -1,5 +1,4 @@
 ---
 
-prometheus_port: 9090
-pushgateway_port: 9091
-
+prometheus_port: {{ prometheus_deploy_port }}
+pushgateway_port: {{ pushgateway_deploy_port }}
