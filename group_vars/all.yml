@@ -5,8 +5,8 @@ backup_dir: "{{ deploy_dir }}/backup"
 images_dir: "{{ deploy_dir }}/images"
 
 # Local
-downloads_dir: "{{ playbook_dir }}/downloads"
-resources_dir: "{{ playbook_dir }}/resources"
+downloads_dir: "{{ package_dir }}/downloads"
+resources_dir: "{{ package_dir }}/resources"
 fetch_log_dir: "{{ playbook_dir }}/fetch_logfile"
 
 # default configuration for multiple host groups and roles

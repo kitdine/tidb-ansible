@@ -3,5 +3,10 @@ retry_files/
 downloads/
 resources/
 fact_files/
+fetch_logfile/
 .vagrant/
 *.pyc
+log/ansible.log
+scripts/dests.json
+conf/packages.yml
+scripts/check_tikv.sh
