@@ -17,7 +17,7 @@
   with_items:
     - run
   vars:
-    role_status_dir: status/{{ role_name }}@{{ prometheus_port }}
+    role_status_dir: status/{{ role_name }}.{{ prometheus_port }}
 
 - include: "{{ process_supervision }}_deployment.yml"
 
