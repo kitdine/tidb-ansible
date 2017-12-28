@@ -14,7 +14,7 @@ exec 2>&1
 
 
 exec bin/prometheus \
-    --config.file="{{ deploy_dir }}/conf/prometheus.yml" \
+    --config.file="{{ deploy_dir }}/conf/prometheus@{{ prometheus_port }}.yml" \
     --web.listen-address=":{{ prometheus_port }}" \
     --web.external-url="http://{{ my_ip }}:{{ prometheus_port }}/" \
     --log.level="{{ prometheus_log_level }}" \

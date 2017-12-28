@@ -3,17 +3,19 @@
 # default configuration for prometheus
 
 # web port / metric port
-prometheus_port: 9090
+# prometheus_port: 9090
 
 
-prometheus_data_dir: "{{ deploy_dir }}/data.metrics"
-prometheus_storage_retention: "360h0m0s"
+prometheus_data_dir: "{{ deploy_dir }}/data.metrics.{{ prometheus_port }}"
+prometheus_storage_retention: "15d"
 
 prometheus_log_level: info
 prometheus_log_dir: "{{ deploy_dir }}/log"
-prometheus_log_filename: "prometheus.log"
+prometheus_log_filename: "prometheus.log@{{ prometheus_port }}"
 
 prometheus_extra_labels:
   - { label: "monitor", value: "prometheus" }
 
 alert_label: "promethues"
+
+prometheus_tag: v2.0.0
