@@ -4,7 +4,7 @@
   file: path="{{ item }}" state=directory mode=0755
   with_items:
   - "{{ pushgateway_log_dir }}"
-  - "{{ deploy_dir }}/status/{{ role_name }}- {{ pushgateway_port }}"
+  - "{{ deploy_dir }}/status/{{ role_name }}.{{ pushgateway_port }}"
 
 - name: deploy pushgateway binary
   copy: src="{{ resources_dir }}/bin/pushgateway" dest="{{ deploy_dir }}/bin/" mode=0755
@@ -32,7 +32,7 @@
   with_items:
     - run
   vars:
-    role_status_dir: status/{{ role_name }}-{{ pushgateway_port }}
+    role_status_dir: status/{{ role_name }}.{{ pushgateway_port }}
 
 - name: prepare firewalld white list
   set_fact:
