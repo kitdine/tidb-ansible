@@ -23,9 +23,6 @@ cd "${DEPLOY_DIR}" || exit 1
   {% set _ = all_pd.append("http://%s:%s" % (pd_ip, pd_port)) -%}
 {% endfor -%}
 
-# unuse zookeeper & kafka
-#   --zookeeper-addrs="{{ zookeeper_addrs }}" \
-
 exec bin/pump \
     --gc="{{ pump_gc }}" \
     --addr="0.0.0.0:{{ pump_port }}" \
@@ -33,6 +30,9 @@ exec bin/pump \
     --pd-urls="{{ all_pd | join(',') }}" \
     --data-dir="{{ pump_data_dir }}" \
     --socket="{{ pump_socket }}" \
+{% if enable_binlog && !enable_binlog_local %}
+    --zookeeper-addrs="{{ zookeeper_addrs }}" \
+{% endif %}
     --log-file="{{ pump_log_dir }}/{{ pump_log_filename }}" \
     --metrics-addr="{{ metric_addr }}" \
     --metrics-interval="{{ metric_interval }}"
