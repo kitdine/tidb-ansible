@@ -13,7 +13,7 @@ tidb_packages:
 {% if tidb_version == 'rc2.2' %}
     version: rc2.2
     url: http://download.pingcap.org/tidb-binlog-rc2.2-linux-amd64.tar.gz
-{% else if enable_binlog_local == 'True' and enable_binlog is 'True'%}
+{% elif enable_binlog_local %}
     version: local
     url: http://download.pingcap.org/tidb-binlog-local-linux-amd64.tar.gz
 {% else %}
