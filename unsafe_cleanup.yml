@@ -32,8 +32,8 @@
       when: process_supervision == 'systemd' and ansible_user == "root"
       with_items:
         - grafana.service
-        - prometheus.service
-        - pushgateway.service
+        - pushgateway@{{ pushgateway_deploy_port }}.service
+        - prometheus@{{ prometheus_deploy_port }}.service
         - node_exporter.service
         - blackbox_exporter.service
         - pd*.service
@@ -50,8 +50,8 @@
       when: process_supervision == 'systemd' and ansible_user != "root"
       with_items:
         - grafana.service
-        - prometheus.service
-        - pushgateway.service
+        - pushgateway@{{ pushgateway_deploy_port }}.service
+        - prometheus@{{ prometheus_deploy_port }}.service
         - node_exporter.service
         - blackbox_exporter.service
         - pd*.service

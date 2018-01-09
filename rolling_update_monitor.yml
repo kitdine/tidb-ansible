@@ -145,7 +145,7 @@
     - name: stop pushgateway by supervise
       shell: cd {{ deploy_dir }}/scripts && ./stop_{{ item }}.sh
       with_items:
-        - pushgateway
+        - pushgateway@{{ pushgateway_deploy_port }}
       when: process_supervision == 'supervise'
 
     - name: stop pushgateway by systemd
@@ -153,13 +153,13 @@
       when: process_supervision == 'systemd' and ansible_user != "root"
       become: true
       with_items:
-        - pushgateway.service
+        - pushgateway@{{ pushgateway_deploy_port }}.service
 
     - name: stop pushgateway by systemd
       systemd: name={{ item }} state=stopped
       when: process_supervision == 'systemd' and ansible_user == "root"
       with_items:
-        - pushgateway.service
+        - pushgateway@{{ pushgateway_deploy_port }}.service
       vars:
         - ansible_become: false
         - ansible_become_user: root
@@ -171,20 +171,20 @@
       shell: cd {{ deploy_dir }}/scripts && (./stop_{{ item }}.sh; ./start_{{ item }}.sh)
       when: process_supervision == 'supervise'
       with_items:
-        - pushgateway
+        - pushgateway@{{ pushgateway_deploy_port }}
 
     - name: start pushgateway by systemd
       systemd: name={{ item }} state=started enabled=no
       when: process_supervision == 'systemd' and ansible_user != 'root'
       become: true
       with_items:
-        - pushgateway.service
+        - pushgateway@{{ pushgateway_deploy_port }}.service
 
     - name: start pushgateway by systemd
       systemd: name={{ item }} state=started enabled=no
       when: process_supervision == 'systemd' and ansible_user == 'root'
       with_items:
-        - pushgateway.service
+        - pushgateway@{{ pushgateway_deploy_port }}.service
       vars:
         - ansible_become: false
         - ansible_become_user: root
@@ -206,7 +206,7 @@
     - name: stop prometheus by supervise
       shell: cd {{ deploy_dir }}/scripts && ./stop_{{ item }}.sh
       with_items:
-        - prometheus
+        - prometheus@{{ prometheus_deploy_port }}
       when: process_supervision == 'supervise'
 
     - name: stop prometheus by systemd
@@ -214,13 +214,13 @@
       when: process_supervision == 'systemd' and ansible_user != "root"
       become: true
       with_items:
-        - prometheus.service
+        - prometheus@{{ prometheus_deploy_port }}.service
 
     - name: stop prometheus by systemd
       systemd: name={{ item }} state=stopped
       when: process_supervision == 'systemd' and ansible_user == "root"
       with_items:
-        - prometheus.service
+        - prometheus@{{ prometheus_deploy_port }}.service
       vars:
         - ansible_become: false
         - ansible_become_user: root
@@ -232,20 +232,20 @@
       shell: cd {{ deploy_dir }}/scripts && (./stop_{{ item }}.sh; ./start_{{ item }}.sh)
       when: process_supervision == 'supervise'
       with_items:
-        - prometheus
+        - prometheus@{{ prometheus_deploy_port }}
 
     - name: start prometheus by systemd
       systemd: name={{ item }} state=started enabled=no
       when: process_supervision == 'systemd' and ansible_user != 'root'
       become: true
       with_items:
-        - prometheus.service
+        - prometheus@{{ prometheus_deploy_port }}.service
 
     - name: start prometheus by systemd
       systemd: name={{ item }} state=started enabled=no
       when: process_supervision == 'systemd' and ansible_user == 'root'
       with_items:
-        - prometheus.service
+        - prometheus@{{ prometheus_deploy_port }}.service
       vars:
         - ansible_become: false
         - ansible_become_user: root

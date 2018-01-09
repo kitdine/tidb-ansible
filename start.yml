@@ -95,23 +95,23 @@
       shell: cd {{ deploy_dir }}/scripts && (./stop_{{ item }}.sh; ./start_{{ item }}.sh)
       when: process_supervision == 'supervise'
       with_items:
-        - pushgateway
-        - prometheus
+        - pushgateway@{{ pushgateway_deploy_port }}
+        - prometheus@{{ prometheus_deploy_port }}
 
     - name: start monitoring modules by systemd
       systemd: name={{ item }} state=started enabled=no
       when: process_supervision == 'systemd' and ansible_user != 'root'
       become: true
       with_items:
-        - pushgateway.service
-        - prometheus.service
+        - pushgateway@{{ pushgateway_deploy_port }}
+        - prometheus@{{ prometheus_deploy_port }}
 
     - name: start monitoring modules by systemd
       systemd: name={{ item }} state=started enabled=no
       when: process_supervision == 'systemd' and ansible_user == 'root'
       with_items:
-        - pushgateway.service
-        - prometheus.service
+        - pushgateway@{{ pushgateway_deploy_port }}
+        - prometheus@{{ prometheus_deploy_port }}
       vars:
         - ansible_become: false
         - ansible_become_user: root

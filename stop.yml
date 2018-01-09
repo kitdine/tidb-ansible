@@ -74,8 +74,8 @@
     - name: stop monitoring modules by supervise
       shell: cd {{ deploy_dir }}/scripts && ./stop_{{ item }}.sh
       with_items:
-        - pushgateway
-        - prometheus
+        - pushgateway@{{ pushgateway_deploy_port }}
+        - prometheus@{{ prometheus_deploy_port }}
       when: process_supervision == 'supervise'
 
     - name: stop monitoring modules by systemd
@@ -83,15 +83,15 @@
       when: process_supervision == 'systemd' and ansible_user != "root"
       become: true
       with_items:
-        - pushgateway.service
-        - prometheus.service
+        - pushgateway@{{ pushgateway_deploy_port }}
+        - prometheus@{{ prometheus_deploy_port }}
 
     - name: stop monitoring modules by systemd
       systemd: name={{ item }} state=stopped
       when: process_supervision == 'systemd' and ansible_user == "root"
       with_items:
-        - pushgateway.service
-        - prometheus.service
+        - pushgateway@{{ pushgateway_deploy_port }}
+        - prometheus@{{ prometheus_deploy_port }}
       vars:
         - ansible_become: false
         - ansible_become_user: root
