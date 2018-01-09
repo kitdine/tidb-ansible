@@ -10,3 +10,5 @@ log/ansible.log
 scripts/dests.json
 conf/packages.yml
 scripts/check_tikv.sh
+conf/binary_packages.yml
+conf/common_packages.yml
