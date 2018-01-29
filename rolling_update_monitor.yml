@@ -165,7 +165,7 @@
         - ansible_become_user: root
 
     - name: wait pushgateway down
-      wait_for: host={{ ansible_host }} port={{ pushgateway_port }} state=stopped
+      wait_for: host={{ ansible_host }} port={{ pushgateway_deploy_port }} state=stopped
 
     - name: start pushgateway by supervise
       shell: cd {{ deploy_dir }}/scripts && (./stop_{{ item }}.sh; ./start_{{ item }}.sh)
