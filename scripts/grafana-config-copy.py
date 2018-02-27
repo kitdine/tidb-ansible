@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 from __future__ import print_function, \
     unicode_literals
@@ -24,6 +24,7 @@ src = dict(
                 "pd"  : 'pd.json',
                 "tidb": 'tidb.json',
                 "tikv": 'tikv.json',
+                "tikv_instances": "tikv_instances.json",
                 "overview": 'overview.json',
                 "disk_performance": 'DiskPerformance.json',
                 "blackbox_exporter": "blackbox_exporter.json"})

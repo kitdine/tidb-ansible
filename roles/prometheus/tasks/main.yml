@@ -21,17 +21,32 @@
   vars:
     hosts: "{{ groups['all'] | list }}"
 
-- name: copy alert rules file if not exist
-  copy: src=alert.rules.yml dest="{{ deploy_dir }}/conf/alert.rules@{{ prometheus_port }}.yml" mode=0644
-  when: not st_alert_conf.stat.exists
-  register: alert_rules_result
-
-- name: set alert rules label if alert.rules.yml changes
+- name: copy alert rules file
+  copy: src={{ item }}.yml dest="{{ deploy_dir }}/conf/{{ item }}@{{ prometheus_port }}.yml" mode=0644
+  with_items:
+    - node.rules
+    - bypass.rules
+    - pd.rules
+    - tidb.rules
+    - tikv.rules
+    - binlog.rules
+    - blacker.rules
+    
+- name: set alert rules label changes
   replace: >
-    dest={{ deploy_dir }}/conf/alert.rules@{{ prometheus_port }}.yml
+    dest={{ deploy_dir }}/conf/{{ item }}
     regexp="ENV_LABELS_ENV"
     replace="{{ cluster_name }}"
-  when: alert_rules_result.changed
+  with_items:
+    - node.rules@{{ prometheus_port }}.yml
+    - bypass.rules@{{ prometheus_port }}.yml
+    - pd.rules@{{ prometheus_port }}.yml
+    - tidb.rules@{{ prometheus_port }}.yml
+    - tikv.rules@{{ prometheus_port }}.yml
+    - binlog.rules@{{ prometheus_port }}.yml
+    - blacker.rules@{{ prometheus_port }}.yml
+
+
 
 - name: create deploy data directory
   file: path={{ item }} state=directory mode=0755

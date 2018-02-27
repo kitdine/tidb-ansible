@@ -247,6 +247,7 @@
         host={{ ansible_host }} port={{ tidb_status_port }} state=present
         send='GET /status HTTP/1.0\r\n\r\n' search_regex='TiDB'
 
+
 - hosts: grafana_servers
   tags:
     - grafana
@@ -303,6 +304,7 @@
               pd:   "{{ cluster_name | title }}-PD"
               tidb: "{{ cluster_name | title }}-TiDB"
               tikv: "{{ cluster_name | title }}-TiKV"
+              tikv_instances: "{{ cluster_name | title }}-TiKV Instances"
               overview: "{{ cluster_name | title }}-Overview"
               disk_performance: "{{ cluster_name | title }}-Disk Performance"
               blackbox_exporter: "{{ cluster_name | title }}-Blackbox_Exporter"
