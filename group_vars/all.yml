@@ -7,7 +7,8 @@ images_dir: "{{ deploy_dir }}/images"
 # Local
 downloads_dir: "{{ playbook_dir }}/downloads"
 resources_dir: "{{ playbook_dir }}/resources"
-fetch_log_dir: "{{ playbook_dir }}/fetch_logfile"
+fetch_tmp_dir: "{{ playbook_dir }}/fetch_tmp"
+fetch_log_dir: "{{ playbook_dir }}/fetch_log"
 
 # default configuration for multiple host groups and roles
 node_exporter_port: 9100
@@ -16,5 +17,7 @@ blackbox_exporter_port: 9115
 # docker
 docker_bin_dir: "/usr/bin"
 
-# Adjust time server
-# time_server: pool.ntp.org
+# Random shifts for retrying failed ops like downloading
+retry_stagger: 5
+
+dev_mode: False
