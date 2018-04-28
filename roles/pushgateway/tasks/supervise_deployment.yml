@@ -4,6 +4,5 @@
   include_role:
     name: supervise
   vars:
-    this_role_name: pushgateway@{{ pushgateway_port }}
-    service_name: pushgateway@{{ pushgateway_port }}
-
+    this_role_name: pushgateway-{{ pushgateway_port }}
+    service_name: pushgateway-{{ pushgateway_port }}

@@ -17,12 +17,16 @@
 - name: check config locally
   hosts: localhost
   any_errors_fatal: true
+  tags:
+    - always
   roles:
     - check_config_static
 
 - name: initializing deployment target
   hosts: all
   any_errors_fatal: true
+  tags:
+    - always
   roles:
     - check_config_dynamic
 
@@ -31,6 +35,11 @@
   roles:
     - { role: node_exporter, when: "groups.monitoring_servers | default(False)" }
     - { role: blackbox_exporter, when: "groups.monitoring_servers | default(False)" }
+
+- name: deploying alertmanager
+  hosts: alertmanager_servers
+  roles:
+    - alertmanager
 
 - name: deploying monitoring server
   hosts: monitoring_servers
@@ -42,16 +51,21 @@
   hosts: grafana_servers
   roles:
     - grafana
+    - grafana_collector
 
 # deploying TiDB cluster
 
 - name: deploying PD cluster
   hosts: pd_servers
+  tags:
+    - pd
   roles:
     - pd
 
 - name: deploying TiKV cluster
   hosts: tikv_servers
+  tags:
+    - tikv
   roles:
     - tikv
 
@@ -71,5 +85,6 @@
 
 - name: finalizing deployment target
   hosts: all
+  become: true
   roles:
-    - role: firewalld
+    - { role: firewalld, when: enable_firewalld is defined and enable_firewalld }

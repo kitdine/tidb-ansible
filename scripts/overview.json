@@ -45,7 +45,7 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": "${DS_TEST-CLUSTER}",
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -59,7 +59,16 @@
   "graphTooltip": 0,
   "hideControls": false,
   "id": null,
-  "links": [],
+  "links": [
+    {
+      "icon": "doc",
+      "tags": [],
+      "title": "Report",
+      "tooltip": "Open a pdf report for the current dashboard",
+      "type": "link",
+      "url": "http://172.16.10.49:8686/api/report/test-cluster-overview?apitoken=eyJrIjoiQkU2bmFQdjZMeTRmWVJ3UFo0bmV3Ym5zRG04Y2hmMHYiLCJuIjoiZ3JhZmFuYV9hcGlrZXkiLCJpZCI6MX0="
+    }
+  ],
   "refresh": "5s",
   "rows": [
     {
@@ -476,91 +485,6 @@
               "max": null,
               "min": null,
               "show": false
-            }
-          ]
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_TEST-CLUSTER}",
-          "decimals": 2,
-          "fill": 1,
-          "id": 62,
-          "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": true,
-            "max": true,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "span": 12,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "rate(node_vmstat_pgpgin[5s]) * 1024 or irate(node_vmstat_pgpgin[5m]) * 1024",
-              "intervalFactor": 2,
-              "legendFormat": "{{instance}} - read",
-              "refId": "A",
-              "step": 4
-            },
-            {
-              "expr": "rate(node_vmstat_pgpgout[5s]) * 1024 or irate(node_vmstat_pgpgout[5m]) * 1024",
-              "intervalFactor": 2,
-              "legendFormat": "{{instance}} - write",
-              "refId": "B",
-              "step": 4
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "I/O Throughput",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "Bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
             }
           ]
         },
@@ -4390,5 +4314,5 @@
   },
   "timezone": "browser",
   "title": "Test-Cluster-Overview",
-  "version": 2
+  "version": 3
 }

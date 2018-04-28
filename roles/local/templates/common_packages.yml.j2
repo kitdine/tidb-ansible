@@ -1,19 +1,12 @@
 ---
 
-# must clear for localhost
-ansible_user:
-ansible_become: false
-ansible_connection: local
-
 tidb_packages:
   - name: tidb
     version: {{ tidb_version }}
     url: http://download.pingcap.org/tidb-{{ tidb_version }}-linux-amd64-unportable.tar.gz
+{% if not deploy_without_tidb|default(false) %}
   - name: tidb-binlog
-{% if tidb_version == 'rc2.2' %}
-    version: rc2.2
-    url: http://download.pingcap.org/tidb-binlog-rc2.2-linux-amd64.tar.gz
-{% elif enable_binlog_local %}
+{% if enable_binlog_local %}
     version: local
     url: http://download.pingcap.org/tidb-binlog-local-linux-amd64.tar.gz
 {% else %}
@@ -27,9 +20,14 @@ tidb_packages:
 common_packages:
   - name: fio
     version: 2.16
-    url: "https://download.pingcap.org/fio-2.16.tar.gz"
+    url: "http://download.pingcap.org/fio-2.16.tar.gz"
+    checksum: "sha256:bb8e2413aaa154e4b738c5f79a346353ae993c93632d93ad316fcfa70eaa4d04"
+  - name: grafana_collector
+    version: latest
+    url: http://download.pingcap.org/grafana_collector-latest-linux-amd64.tar.gz
 {% if process_supervision == 'supervise' %}
   - name: daemontools
     version: 0.53
     url: http://download.pingcap.org/daemontools-0.53.tar.gz
+    checksum: "sha256:a4abd491cf185aef5644be5a4e1ed52c8f458802178d4c0efcc8178a5ca67fb7"
 {% endif %}

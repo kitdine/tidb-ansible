@@ -32,8 +32,8 @@
 {{ item }} = {{ value | to_json }}
 {% endfor %}
 
-[xprotocol]
-{% for item, value in tidb_conf.xprotocol | dictsort -%}
+[proxy-protocol]
+{% for item, value in tidb_conf.proxy_protocol | dictsort -%}
 {{ item }} = {{ value | to_json }}
 {% endfor %}
 

@@ -7,8 +7,11 @@ images_dir: "{{ deploy_dir }}/images"
 # Local
 downloads_dir: "{{ package_dir }}/downloads"
 resources_dir: "{{ package_dir }}/resources"
-fetch_tmp_dir: "{{ playbook_dir }}/fetch_tmp"
-fetch_log_dir: "{{ playbook_dir }}/fetch_log"
+fetch_tmp_dir: "{{ package_dir }}/fetch_tmp"
+fetch_log_dir: "{{ package_dir }}/fetch_log"
+cert_dir:      "{{ package_dir }}/conf/ssl"
+script_dir:    "{{ package_dir }}/scripts"
+binary_dir:    "{{ package_dir }}/resources/bin"
 
 # default configuration for multiple host groups and roles
 node_exporter_port: 9100
@@ -21,3 +24,6 @@ docker_bin_dir: "/usr/bin"
 retry_stagger: 5
 
 dev_mode: False
+
+# deployment methods, [binary, docker] docker deployment method is not recommended and deprecated.
+deployment_method: binary

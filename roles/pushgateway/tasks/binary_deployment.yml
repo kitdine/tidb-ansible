@@ -11,13 +11,12 @@
 - name: create run script
   template:
     src: "{{ item }}_{{ role_name }}_binary.sh.j2"
-    dest: "{{ deploy_dir }}/scripts/{{ item }}_{{ role_name }}@{{ pushgateway_port }}.sh"
+    dest: "{{ deploy_dir }}/scripts/{{ item }}_{{ role_name }}-{{ pushgateway_port }}.sh"
     mode: "0755"
     backup: yes
   with_items:
     - run
   vars:
-    role_status_dir: status/{{ role_name }}.{{ pushgateway_port }}
+    role_status_dir: status/{{ role_name }}-{{ pushgateway_port }}
 
-- include: "{{ process_supervision }}_deployment.yml"
-
+- include_tasks: "{{ process_supervision }}_deployment.yml"

@@ -4,6 +4,5 @@
   include_role:
     name: supervise
   vars:
-    this_role_name: prometheus@{{ pushgateway_port }}
-    service_name: prometheus@{{ pushgateway_port }}
-
+    this_role_name: prometheus-{{ prometheus_port }}
+    service_name: prometheus-{{ prometheus_port }}

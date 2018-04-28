@@ -1,11 +1,21 @@
 ---
 
+- name: Stop if ansible version is too low, make sure that the Ansible version is Ansible 2.4.2 or later, otherwise a compatibility issue occurs.
+  assert:
+    that:
+      - ansible_version.full|version_compare('2.4.2', '>=')
+      # - ansible_version.full is version('2.5.0', '>=')
+
 - name: create downloads and resources directories
   file: path="{{ item }}" state=directory mode=0755
   with_items:
   - "{{ downloads_dir }}"
   - "{{ resources_dir }}"
   - "{{ resources_dir }}/bin"
+
+- name: create cert directory
+  file: path="{{ cert_dir }}" state=directory mode=0755
+  when: enable_tls|default(false)
 
 - name: create packages.yml
   template: src=common_packages.yml.j2 dest={{ playbook_dir }}/conf/common_packages.yml
@@ -71,7 +81,37 @@
   with_items: "{{ common_packages }}"
   when: has_outbound_network
 
-- include: "{{ deployment_method }}_deployment.yml"
+- name: download cfssl binary
+  get_url:
+    url: https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
+    dest: "{{ resources_dir }}/bin/cfssl"
+    mode: 0755
+    force: yes
+    validate_certs: no
+  register: get_url_result
+  until: "'OK' in get_url_result.msg or 'file already exists' in get_url_result.msg"
+  retries: 4
+  delay: "{{ retry_stagger | random + 3 }}"
+  when:
+    - has_outbound_network
+    - enable_tls|default(false)
+
+- name: download cfssljson binary
+  get_url:
+    url: https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
+    dest: "{{ resources_dir }}/bin/cfssljson"
+    mode: 0755
+    force: yes
+    validate_certs: no
+  register: get_url_result
+  until: "'OK' in get_url_result.msg or 'file already exists' in get_url_result.msg"
+  retries: 4
+  delay: "{{ retry_stagger | random + 3 }}"
+  when:
+    - has_outbound_network
+    - enable_tls|default(false)
+
+- include_tasks: "{{ deployment_method }}_deployment.yml"
 
 - name: unarchive tidb binary
   shell: ls -1 {{ item.name }}-{{ item.version }}.tar.gz | xargs -n1 tar xzf
@@ -97,6 +137,10 @@
     cp -v {{ downloads_dir }}/fio-*/{{ item }} "{{ resources_dir }}/bin/"
   with_items:
     - fio
+
+- name: cp grafana_collector binary and fonts
+  shell: >
+    cp -rv {{ downloads_dir }}/grafana_collector-latest-linux-amd64/* "{{ resources_dir }}/bin/"
 
 - name: cp daemontools binary
   shell: >
