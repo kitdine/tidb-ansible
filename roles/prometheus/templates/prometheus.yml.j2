@@ -30,7 +30,8 @@ alerting:
 #  alertmanagers:
 #  - static_configs:
 #    - targets:
-#      - '127.0.0.1:39093'
+#      - 'alertmanager_host:9093'
+{% endif %}
 
 {% set pushgateway_host = hostvars[groups.monitoring_servers[0]].ansible_host | default(hostvars[groups.monitoring_servers[0]].inventory_hostname)
     if groups.get('monitoring_servers', []) else '' -%}
