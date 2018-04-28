@@ -2,9 +2,6 @@
 
 # default configuration for prometheus
 
-# web port / metric port
-prometheus_port: 9090
-
 prometheus_data_dir: "{{ deploy_dir }}/prometheus2.0.0.data.metrics"
 prometheus_storage_retention: "15d"
 
@@ -17,4 +14,4 @@ prometheus_extra_labels:
 
 alert_label: "promethues"
 
-prometheus_tag: v2.0.0
+prometheus_tag: v2.2.1

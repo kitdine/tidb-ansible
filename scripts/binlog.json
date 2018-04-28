@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_Drainer",
-      "label": "Drainer",
+      "name": "DS_TEST-CLUSTER",
+      "label": "test-cluster",
       "description": "",
       "type": "datasource",
       "pluginId": "prometheus",
@@ -36,14 +36,36 @@
     }
   ],
   "annotations": {
-    "list": []
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "${DS_TEST-CLUSTER}",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
   },
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
   "hideControls": false,
   "id": null,
-  "links": [],
+  "links": [
+    {
+      "icon": "doc",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": true,
+      "title": "Report",
+      "tooltip": "Open a pdf report for the current dashboard",
+      "type": "link",
+      "url": "http://172.16.10.49:8686/api/report/test-cluster-binlog?apitoken=eyJrIjoiQkU2bmFQdjZMeTRmWVJ3UFo0bmV3Ym5zRG04Y2hmMHYiLCJuIjoiZ3JhZmFuYV9hcGlrZXkiLCJpZCI6MX0="
+    }
+  ],
   "refresh": "5s",
   "rows": [
     {
@@ -53,7 +75,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_Drainer}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_TEST-CLUSTER}",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -79,6 +103,7 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 6,
           "stack": false,
           "steppedLine": false,
@@ -104,6 +129,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -131,7 +157,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_Drainer}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_TEST-CLUSTER}",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -157,6 +185,7 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 6,
           "stack": false,
           "steppedLine": false,
@@ -181,6 +210,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -226,7 +256,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_Drainer}",
+          "datasource": "${DS_TEST-CLUSTER}",
           "editable": true,
           "error": false,
           "format": "none",
@@ -272,6 +302,7 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": false
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "binlog_drainer_window{marker=\"upper\", }/(2^18*10^3)",
@@ -304,7 +335,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_Drainer}",
+          "datasource": "${DS_TEST-CLUSTER}",
           "editable": true,
           "error": false,
           "format": "none",
@@ -350,6 +381,7 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": false
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "binlog_drainer_window{marker=\"lower\", }/(2^18*10^3)",
@@ -382,7 +414,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_Drainer}",
+          "datasource": "${DS_TEST-CLUSTER}",
           "editable": true,
           "error": false,
           "format": "none",
@@ -428,6 +460,7 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": false
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "binlog_drainer_position{}/((2^18)*1000)",
@@ -460,7 +493,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_Drainer}",
+          "datasource": "${DS_TEST-CLUSTER}",
           "editable": true,
           "error": false,
           "format": "none",
@@ -506,6 +539,7 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": false
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "binlog_drainer_error_binlog_count{}",
@@ -538,7 +572,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_Drainer}",
+          "datasource": "${DS_TEST-CLUSTER}",
           "editable": true,
           "error": false,
           "format": "none",
@@ -584,6 +618,7 @@
             "lineColor": "rgb(31, 120, 193)",
             "show": false
           },
+          "tableColumn": "",
           "targets": [
             {
               "expr": "binlog_drainer_query_tikv_count{}",
@@ -621,7 +656,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_Drainer}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_TEST-CLUSTER}",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -645,12 +682,14 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 12,
           "stack": false,
           "steppedLine": false,
           "targets": [
             {
               "expr": "(binlog_drainer_window{marker=\"upper\", } - ignoring(marker)binlog_drainer_position{})/(2^18*10^3)",
+              "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "",
               "metric": "binlog_drainer_position",
@@ -670,6 +709,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -678,7 +718,7 @@
           "yaxes": [
             {
               "format": "none",
-              "label": "绉�",
+              "label": "",
               "logBase": 1,
               "max": null,
               "min": null,
@@ -709,7 +749,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_Drainer}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_TEST-CLUSTER}",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -733,6 +775,7 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 6,
           "stack": false,
           "steppedLine": false,
@@ -758,6 +801,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -785,7 +829,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_Drainer}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_TEST-CLUSTER}",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -809,6 +855,7 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 6,
           "stack": false,
           "steppedLine": false,
@@ -834,6 +881,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -873,7 +921,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_Drainer}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_TEST-CLUSTER}",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -897,6 +947,7 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 6,
           "stack": false,
           "steppedLine": false,
@@ -921,6 +972,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -948,7 +1000,9 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_Drainer}",
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_TEST-CLUSTER}",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -972,6 +1026,7 @@
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 6,
           "stack": false,
           "steppedLine": false,
@@ -996,6 +1051,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -1065,6 +1121,6 @@
     ]
   },
   "timezone": "browser",
-  "title": "Drainer",
-  "version": 1
+  "title": "Test-Cluster-Binlog",
+  "version": 3
 }

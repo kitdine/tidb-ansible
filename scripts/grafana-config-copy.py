@@ -7,7 +7,7 @@ import urllib
 import urllib2
 import base64
 import json
-from pprint import pprint
+# from pprint import pprint
 
 try:
     input = raw_input
@@ -25,8 +25,9 @@ src = dict(
                 "tidb": 'tidb.json',
                 "tikv": 'tikv.json',
                 "tikv_instances": "tikv_instances.json",
+                "binlog": "binlog.json",
                 "overview": 'overview.json',
-                "disk_performance": 'DiskPerformance.json',
+                "disk_performance": 'disk_performance.json',
                 "blackbox_exporter": "blackbox_exporter.json"})
 
 dests = [
@@ -53,7 +54,7 @@ def export_dashboard(api_url, api_key, dashboard_name):
 def fill_dashboard_with_dest_config(dashboard, dest, type_='node'):
     dashboard['title'] = dest['titles'][type_]
     dashboard['id'] = None
-#    pprint(dashboard)
+    # pprint(dashboard)
     for row in dashboard['rows']:
         for panel in row['panels']:
             panel['datasource'] = dest['datasource']
@@ -68,6 +69,18 @@ def fill_dashboard_with_dest_config(dashboard, dest, type_='node'):
     if 'annotations' in dashboard:
         for annotation in dashboard['annotations']['list']:
             annotation['datasource'] = dest['datasource']
+
+    if 'links' in dashboard:
+        for link in dashboard['links']:
+            if 'title' in link and link['title'] == 'Report':
+                link['icon'] = "doc"
+                link['includeVars'] = True
+                link['keepTime'] = True
+                link['targetBlank'] = True
+                link['tooltip'] = "Open a pdf report for the current dashboard"
+                link['type'] = "link"
+                link['url'] = "{0}api/report/{1}?apitoken={2}".format(dest['report_url'], dest['titles'][type_].lower(), dest['apikey'])
+
     return dashboard
 
 def import_dashboard(api_url, api_key, dashboard):
